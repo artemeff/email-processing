@@ -6,13 +6,21 @@ describe 'Comments', type: :request do
     let(:author)    { Fabricate(:user) }
     let(:article)   { Fabricate(:post, user: author) }
 
-    it 'with valid params' do
-      expect {
-        post '/comments', user_id: commenter.id, post_id: article.id, title: 'test', text: 'text'
-      }.to change{Comment.count}.by(1)
+    context 'with valid params' do
+      let(:params) { Hash[user_id: commenter.id, post_id: article.id, title: 'test', text: 'text'] }
 
-      expect(response.status).to eq(201)
-      expect(response.body).to eq('')
+      it 'creates new comment' do
+        expect {
+          post '/comments', params
+        }.to change{Comment.count}.by(1)
+
+        expect(response.status).to eq(201)
+        expect(response.body).to eq('')
+      end
+
+      it 'sends email to post author about new comment' do
+        expect(Mail::TestMailer.deliveries.count).to eq(1)
+      end
     end
 
     it 'with invalid params' do

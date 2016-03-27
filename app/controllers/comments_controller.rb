@@ -1,6 +1,9 @@
-class CommentsController < ApplicationController
+class CommentsController < ApiController
   def create
-    Comment.create!(create_comment_params)
+    comment = Comment.create!(create_comment_params)
+
+    Notifications.new_comment(comment.post,
+      comment.post.user, comment.user, comment).deliver_now!
 
     render status: 201, nothing: true
   rescue StandardError => e
