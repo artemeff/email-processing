@@ -5,3 +5,10 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+author = User.create!(email: 'author@dev')
+commenter = User.create!(name: 'John Doe', email: 'john.doe@dev')
+
+post = Post.create!(user: author, title: 'test post',
+  text: 'Really interesting text about something...')
+Comment.create!(user: commenter, post: post, text: 'about what?')
