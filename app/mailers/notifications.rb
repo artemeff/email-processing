@@ -5,12 +5,6 @@ class Notifications < ApplicationMailer
     @commenter = commenter
     @comment = comment
 
-    mail to: author.email, reply_to: make_reply_to(post)
-  end
-
-private
-
-  def make_reply_to(post)
-    "comment.#{post.id}@dev"
+    mail to: author.email, reply_to: CommentCrypto.encrypt(author, post, 'dev')
   end
 end

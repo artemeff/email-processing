@@ -3,6 +3,8 @@ source 'https://rubygems.org'
 gem 'rails', '4.2.6'
 gem 'puma',  '~> 3.2.0'
 
+gem 'symmetric-encryption', '~> 3.8.2'
+
 gem 'griddler', '~> 1.3.1'
 gem 'griddler-sendgrid', '~> 0.0.1'
 

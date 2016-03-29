@@ -2,7 +2,8 @@ require 'rails_helper'
 
 describe 'EmailProcessor', type: :request do
   describe 'POST /email_processor' do
-    let(:post_id) { 13 }
+    let(:post_id) { 24 }
+    let(:user_id) { 42 }
 
     let(:open_file) do
       ->(filename) do
@@ -11,13 +12,14 @@ describe 'EmailProcessor', type: :request do
     end
 
     before do
-      Fabricate(:post, id: post_id, user: Fabricate(:user, email: 'user@dev'))
+      Fabricate(:post, id: post_id, user:
+        Fabricate(:user, id: user_id, email: 'user@dev'))
     end
 
     it 'creates a new comment with valid params' do
       post '/email_processor', {
         headers:  open_file.('sendgrid_headers'),
-        to: "comment.#{post_id}@dev",
+        to: "1bb9a0a84e36210d87be3982d2b745f4@dev",
         from: 'John Doe <user@dev>',
         text: open_file.('sendgrid_text'),
         envelope: open_file.('sendgrid_envelope'),

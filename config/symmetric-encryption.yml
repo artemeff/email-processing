@@ -1,0 +1,20 @@
+---
+development: &development_defaults
+  key:         Hc83PdJD10aldSKzYaI47Suu0Rnu1s2b/HNMM6sMsqU=
+  iv:          mmNxfZdI+TBRlUeUf//uGA==
+  cipher_name: aes-128-cbc
+  encoding:    :base16
+
+test:
+  <<: *development_defaults
+
+production:
+  # List Symmetric Key files in the order of current / latest first
+  ciphers:
+    -
+      # don't put it in repo, like me :)
+      key:         G1WcOt00Ur0BRGXxF+mHTv9w6C1ieH9kJv3e58Uk1mQ=
+      iv:          0QPLGxzCv/R3+fQWwCo68A==
+      cipher_name: aes-128-cbc
+      encoding:    :base16
+      version:     1

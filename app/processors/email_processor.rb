@@ -6,19 +6,11 @@ class EmailProcessor
   end
 
   def process
-    post_id = parse_params(@to.first[:email])
-    user = User.find_by!(email: @from[:email])
+    params = CommentCrypto.decrypt(@to.first[:email])
+    user = User.find(params[:user_id])
 
-    Post.find(post_id).comments.create!(user: user, text: @comment)
+    Post.find(params[:post_id]).comments.create!(user: user, text: @comment)
   rescue StandardError
     :error
-  end
-
-private
-
-  # parse_params('comment.42@dev.com')
-  # => '42'
-  def parse_params(to)
-    to.split('@').first.split('.')[1]
   end
 end
